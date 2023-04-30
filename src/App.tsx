@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.scss"
+import { Section } from "./components"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="background-img">
+        <div className="cards">
+          <div className="card-front">
+            <img src="./images/bg-card-front.png" alt="card-front" />
+
+            <div className="card-info">
+              <h1 className="card-number">0000 0000 0000 0000</h1>
+              <div className="card-desc">
+                <span className="name">Jane Appleseed </span>
+                <span className="date">00/00</span>
+              </div>
+            </div>
+          </div>
+          <div className="card-back">
+            <img src="./images/bg-card-back.png" alt="card-back" />
+            <div className="cvc">
+              <span>123</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Section />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,0 +1,33 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 60%;
+
+  .form-container {
+    .form {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        margin: 1rem 0 0.5rem 0;
+      }
+    }
+    .form-info {
+      display: flex;
+
+      .form-date {
+        width: 50%;
+        margin-right: 1rem;
+        .form-mm-yy {
+          display: flex;
+        }
+      }
+      .form-cvc {
+        width: 50%;
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@import "../../styles/";
+
+.result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 32px;
+    letter-spacing: 0.5rem;
+    margin: 2rem 0 1.5rem;
+  }
+  span {
+    color: $dark-grayish-violet;
+  }
+}

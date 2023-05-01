@@ -1,0 +1,67 @@
+@import "../../styles";
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 60%;
+
+  .container {
+    max-width: 35%;
+    margin-left: 8rem;
+    .form {
+      display: flex;
+      flex-direction: column;
+      color: $very-dark-violet;
+
+      label {
+        text-transform: uppercase;
+        margin: 1rem 0 0 0;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.7rem;
+        margin: 0.5rem 0;
+        border: 1.5px $dark-grayish-violet solid;
+        border-radius: 6px;
+
+        &:focus {
+          border: solid 1.5px transparent;
+
+          background-image: linear-gradient(white, white),
+            linear-gradient(to right, $input-active-border);
+          background-origin: border-box;
+          background-clip: padding-box, border-box;
+          outline: none;
+        }
+
+        ::placeholder {
+          color: $dark-grayish-violet;
+        }
+      }
+
+      span {
+        color: $input-e;
+      }
+    }
+    .form-info {
+      display: flex;
+
+      .form-date {
+        width: 50%;
+        margin-right: 1rem;
+        .form-mm-yy {
+          display: flex;
+          flex-direction: row;
+          gap: 0.5rem;
+        }
+      }
+      .form-cvc {
+        width: 50%;
+      }
+    }
+  }
+}

@@ -41,6 +41,10 @@
         ::placeholder {
           color: $dark-grayish-violet;
         }
+
+        &.input-error {
+          border: 1.5px $input-e solid;
+        }
       }
 
       span {

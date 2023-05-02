@@ -1,3 +1,5 @@
+@import "./styles/";
+
 .app {
   display: flex;
   min-height: 100vh;
@@ -25,7 +27,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-left: -180px;
+        margin-left: -200px;
         display: flex;
         flex-direction: column;
         .card-number {
@@ -43,6 +45,53 @@
         position: absolute;
         top: 45%;
         left: 81%;
+      }
+    }
+  }
+}
+
+@include tablet {
+  .app {
+    flex-direction: column;
+    max-height: 100vh;
+    .background-img {
+      width: 100%;
+      min-height: 35vh;
+    }
+    .cards {
+      top: 0;
+      left: 0;
+      transform: translate(0, 0);
+      gap: 2rem;
+      img {
+        max-width: 300px;
+      }
+      .card-front {
+        transform: translateX(0);
+        top: 113px;
+        left: 20px;
+        z-index: 1;
+        .card-info {
+          top: 95px;
+          left: 25px;
+          margin-left: 0;
+          .card-number {
+            font-size: 22px;
+            margin-bottom: 1rem;
+          }
+          .card-desc {
+            font-size: 12px;
+          }
+        }
+      }
+      .card-back {
+        top: -180px;
+        left: 60px;
+        .cvc {
+          top: 43%;
+          left: 80%;
+          font-size: 14px;
+        }
       }
     }
   }

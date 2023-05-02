@@ -12,6 +12,8 @@ export const Section = () => {
     cvc: "success",
   })
 
+  const [showResult, setShowResult] = useState(false)
+
   const handleDisabled = (): boolean => {
     let disabled = true
     for (let key in inpClass) {
@@ -22,6 +24,10 @@ export const Section = () => {
       }
     }
     return disabled
+  }
+
+  const handleClick = () => {
+    setShowResult((prev) => !prev)
   }
 
   const handleBlur = (inp: any, value: any) => {
@@ -69,75 +75,76 @@ export const Section = () => {
   return (
     <div className="section">
       <div className="container">
-        <div className="form-wrapper">
-          <div className="form form-name ">
-            <label htmlFor="cardholder_name">Cardholder Name</label>
-            <input
-              className={inpClass.name}
-              name="cardholder_name"
-              type="text"
-              placeholder="e.g. Card Number"
-              onBlur={(e) => handleBlur(e.target.name, e.target.value)}
-            />
-          </div>
-          <div className="form form-number">
-            <label htmlFor="card_number">Card number</label>
-            <input
-              className={inpClass.number}
-              name="card_number"
-              type="number"
-              placeholder="e.g. 1234 5678 9123 0000"
-              onBlur={(e) => handleBlur(e.target.name, e.target.value)}
-            />
-            {inpClass.number === "error" ? (
-              <span>Wrong format, numbers only</span>
-            ) : null}
-          </div>
-          <div className="form-info">
-            <div className="form form-date success">
-              <label htmlFor="card_date_yy">{`exp. date ${"mm/yy"}`}</label>
-              <div className="form form-mm-yy">
-                <input
-                  className={inpClass.mm}
-                  name="card_date_mm"
-                  type="number"
-                  placeholder="MM"
-                  maxLength={2}
-                  minLength={2}
-                  onBlur={(e) => handleBlur(e.target.name, e.target.value)}
-                />
-                <input
-                  className={inpClass.yy}
-                  name="card_date_yy"
-                  type="number"
-                  placeholder="YY"
-                  maxLength={2}
-                  minLength={2}
-                  onBlur={(e) => handleBlur(e.target.name, e.target.value)}
-                />
-              </div>
-              {inpClass.mm === "error" || inpClass.yy === "error" ? (
-                <span>Cant'be blank</span>
-              ) : null}
-            </div>
-            <div className="form form-cvc">
-              <label htmlFor="">cvc</label>
+        {showResult ? (
+          <Result handleClick={handleClick} />
+        ) : (
+          <div className="form-wrapper">
+            <div className="form form-name ">
+              <label htmlFor="cardholder_name">Cardholder Name</label>
               <input
-                className={inpClass.cvc}
-                name="card_cvc"
-                type="number"
-                placeholder="e.g. 123"
-                maxLength={3}
-                minLength={3}
+                className={inpClass.name}
+                name="cardholder_name"
+                type="text"
+                placeholder="e.g. Card Number"
                 onBlur={(e) => handleBlur(e.target.name, e.target.value)}
               />
-              {inpClass.cvc === "error" ? <span>Cant'be blank</span> : null}
             </div>
-          </div>
+            <div className="form form-number">
+              <label htmlFor="card_number">Card number</label>
+              <input
+                className={inpClass.number}
+                name="card_number"
+                type="number"
+                placeholder="e.g. 1234 5678 9123 0000"
+                onBlur={(e) => handleBlur(e.target.name, e.target.value)}
+              />
+              {inpClass.number === "error" ? (
+                <span>Wrong format, numbers only</span>
+              ) : null}
+            </div>
+            <div className="form-info">
+              <div className="form form-date success">
+                <label htmlFor="card_date_yy">{`exp. date ${"mm/yy"}`}</label>
+                <div className="form form-mm-yy">
+                  <input
+                    className={inpClass.mm}
+                    name="card_date_mm"
+                    type="number"
+                    placeholder="MM"
+                    onBlur={(e) => handleBlur(e.target.name, e.target.value)}
+                  />
+                  <input
+                    className={inpClass.yy}
+                    name="card_date_yy"
+                    type="number"
+                    placeholder="YY"
+                    onBlur={(e) => handleBlur(e.target.name, e.target.value)}
+                  />
+                </div>
+                {inpClass.mm === "error" || inpClass.yy === "error" ? (
+                  <span>Cant'be blank</span>
+                ) : null}
+              </div>
+              <div className="form form-cvc">
+                <label htmlFor="">cvc</label>
+                <input
+                  className={inpClass.cvc}
+                  name="card_cvc"
+                  type="number"
+                  placeholder="e.g. 123"
+                  onBlur={(e) => handleBlur(e.target.name, e.target.value)}
+                />
+                {inpClass.cvc === "error" ? <span>Cant'be blank</span> : null}
+              </div>
+            </div>
 
-          <Button disable={handleDisabled} span={"Confirm"} />
-        </div>
-        <Result />
+            <Button
+              handleClick={handleClick}
+              disable={handleDisabled}
+              span={"Confirm"}
+            />
+          </div>
+        )}
       </div>
     </div>
   )

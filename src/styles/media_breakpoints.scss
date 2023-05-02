@@ -1,0 +1,11 @@
+@mixin tablet {
+  @media (max-width: $breakpoint_md) {
+    @content;
+  }
+}
+
+@mixin xxl {
+  @media (max-width: $breakpoint-xxl) {
+    @content;
+  }
+}

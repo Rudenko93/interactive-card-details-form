@@ -1,9 +1,6 @@
+import { IResultProps } from "../../types"
 import { Button } from "../Button"
 import "./Result.scss"
-
-interface IResultProps {
-  handleClick: () => void
-}
 
 export const Result: React.FC<IResultProps> = ({ handleClick }) => {
   return (

@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { Button } from "../Button"
 import { Result } from "../Result"
+import { IInpClass, IInputName } from "../../types"
 import "./Section.scss"
 
 export const Section = () => {
-  const [inpClass, setInpClass] = useState<Record<string, string>>({
+  const [inpClass, setInpClass] = useState<IInpClass>({
     name: "success",
     number: "success",
     mm: "success",
@@ -12,11 +13,12 @@ export const Section = () => {
     cvc: "success",
   })
 
-  const [showResult, setShowResult] = useState(false)
+  const [showResult, setShowResult] = useState<boolean>(false)
 
   const handleDisabled = (): boolean => {
     let disabled = true
-    for (let key in inpClass) {
+    let key: keyof typeof inpClass
+    for (key in inpClass) {
       if (inpClass[key] === "success") disabled = false
       else {
         disabled = true
@@ -26,11 +28,11 @@ export const Section = () => {
     return disabled
   }
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setShowResult((prev) => !prev)
   }
 
-  const handleBlur = (inp: any, value: any) => {
+  const handleBlur = (inp: IInputName, value: string) => {
     if (inp === "card_number")
       if (value.length === 16) {
         setInpClass((prev) => {
@@ -42,7 +44,7 @@ export const Section = () => {
         })
       }
     if (inp === "card_date_yy")
-      if (value.length === 0 || value < 0)
+      if (value.length === 0 || +value < 0)
         setInpClass((prev) => {
           return { ...prev, yy: "error" }
         })
@@ -52,7 +54,7 @@ export const Section = () => {
         })
 
     if (inp === "card_date_mm")
-      if (value.length === 0 || value < 0 || value > 12)
+      if (value.length === 0 || +value < 0 || +value > 12)
         setInpClass((prev) => {
           return { ...prev, mm: "error" }
         })
@@ -62,7 +64,7 @@ export const Section = () => {
         })
 
     if (inp === "card_cvc")
-      if (value.length === 0 || value < 0)
+      if (value.length === 0 || +value < 0)
         setInpClass((prev) => {
           return { ...prev, cvc: "error" }
         })
@@ -86,7 +88,6 @@ export const Section = () => {
                 name="cardholder_name"
                 type="text"
                 placeholder="e.g. Card Number"
-                onBlur={(e) => handleBlur(e.target.name, e.target.value)}
               />
             </div>
             <div className="form form-number">
@@ -96,7 +97,7 @@ export const Section = () => {
                 name="card_number"
                 type="number"
                 placeholder="e.g. 1234 5678 9123 0000"
-                onBlur={(e) => handleBlur(e.target.name, e.target.value)}
+                onBlur={(e) => handleBlur("card_number", e.target.value)}
               />
               {inpClass.number === "error" ? (
                 <span>Wrong format, numbers only</span>
@@ -111,14 +112,14 @@ export const Section = () => {
                     name="card_date_mm"
                     type="number"
                     placeholder="MM"
-                    onBlur={(e) => handleBlur(e.target.name, e.target.value)}
+                    onBlur={(e) => handleBlur("card_date_yy", e.target.value)}
                   />
                   <input
                     className={inpClass.yy}
                     name="card_date_yy"
                     type="number"
                     placeholder="YY"
-                    onBlur={(e) => handleBlur(e.target.name, e.target.value)}
+                    onBlur={(e) => handleBlur("card_date_mm", e.target.value)}
                   />
                 </div>
                 {inpClass.mm === "error" || inpClass.yy === "error" ? (
@@ -132,7 +133,7 @@ export const Section = () => {
                   name="card_cvc"
                   type="number"
                   placeholder="e.g. 123"
-                  onBlur={(e) => handleBlur(e.target.name, e.target.value)}
+                  onBlur={(e) => handleBlur("card_cvc", e.target.value)}
                 />
                 {inpClass.cvc === "error" ? <span>Cant'be blank</span> : null}
               </div>

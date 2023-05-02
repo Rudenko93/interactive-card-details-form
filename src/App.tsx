@@ -1,7 +1,7 @@
-import "./App.scss"
 import { Section } from "./components/Section"
+import "./App.scss"
 
-function App() {
+export const App: React.FC = () => {
   return (
     <div className="app">
       <div className="background-img">

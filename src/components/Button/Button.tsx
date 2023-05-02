@@ -1,10 +1,5 @@
+import { IButtonProps } from "../../types"
 import "./Button.scss"
-
-interface IButtonProps {
-  handleClick?: () => void
-  disable?: () => boolean
-  span: string
-}
 
 export const Button: React.FC<IButtonProps> = ({
   handleClick = () => "",

@@ -1,10 +1,10 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Button } from "../Button"
 import { Result } from "../Result"
 import "./Section.scss"
 
 export const Section = () => {
-  const ref = useRef({
+  const [inpClass, setInpClass] = useState<Record<string, string>>({
     name: "success",
     number: "success",
     mm: "success",
@@ -12,23 +12,58 @@ export const Section = () => {
     cvc: "success",
   })
 
-  const [inpClass, setInpClass] = useState({
-    name: ref.current.name,
-    number: ref.current.number,
-    mm: ref.current.mm,
-    yy: ref.current.yy,
-    cvc: ref.current.cvc,
-  })
+  const handleDisabled = (): boolean => {
+    let disabled = true
+    for (let key in inpClass) {
+      if (inpClass[key] === "success") disabled = false
+      else {
+        disabled = true
+        break
+      }
+    }
+    return disabled
+  }
 
   const handleBlur = (inp: any, value: any) => {
-    if (value.length < 10)
-      setInpClass({
-        name: "error",
-        number: ref.current.number,
-        mm: ref.current.mm,
-        yy: ref.current.yy,
-        cvc: ref.current.cvc,
-      })
+    if (inp === "card_number")
+      if (value.length === 16) {
+        setInpClass((prev) => {
+          return { ...prev, number: "success" }
+        })
+      } else {
+        setInpClass((prev) => {
+          return { ...prev, number: "error" }
+        })
+      }
+    if (inp === "card_date_yy")
+      if (value.length === 0 || value < 0)
+        setInpClass((prev) => {
+          return { ...prev, yy: "error" }
+        })
+      else
+        setInpClass((prev) => {
+          return { ...prev, yy: "success" }
+        })
+
+    if (inp === "card_date_mm")
+      if (value.length === 0 || value < 0 || value > 12)
+        setInpClass((prev) => {
+          return { ...prev, mm: "error" }
+        })
+      else
+        setInpClass((prev) => {
+          return { ...prev, mm: "success" }
+        })
+
+    if (inp === "card_cvc")
+      if (value.length === 0 || value < 0)
+        setInpClass((prev) => {
+          return { ...prev, cvc: "error" }
+        })
+      else
+        setInpClass((prev) => {
+          return { ...prev, cvc: "success" }
+        })
   }
 
   return (
@@ -42,7 +77,7 @@ export const Section = () => {
               name="cardholder_name"
               type="text"
               placeholder="e.g. Card Number"
-              onBlur={(e) => handleBlur("name", e.target.value)}
+              onBlur={(e) => handleBlur(e.target.name, e.target.value)}
             />
           </div>
           <div className="form form-number">
@@ -50,8 +85,9 @@ export const Section = () => {
             <input
               className={inpClass.number}
               name="card_number"
-              type="text"
+              type="number"
               placeholder="e.g. 1234 5678 9123 0000"
+              onBlur={(e) => handleBlur(e.target.name, e.target.value)}
             />
             {inpClass.number === "error" ? (
               <span>Wrong format, numbers only</span>
@@ -59,21 +95,25 @@ export const Section = () => {
           </div>
           <div className="form-info">
             <div className="form form-date success">
-              <label htmlFor="card_date">{`exp. date ${"mm/yy"}`}</label>
+              <label htmlFor="card_date_yy">{`exp. date ${"mm/yy"}`}</label>
               <div className="form form-mm-yy">
                 <input
                   className={inpClass.mm}
-                  name="card_date"
-                  type="text"
+                  name="card_date_mm"
+                  type="number"
                   placeholder="MM"
                   maxLength={2}
+                  minLength={2}
+                  onBlur={(e) => handleBlur(e.target.name, e.target.value)}
                 />
                 <input
                   className={inpClass.yy}
-                  name="card_date"
-                  type="text"
+                  name="card_date_yy"
+                  type="number"
                   placeholder="YY"
                   maxLength={2}
+                  minLength={2}
+                  onBlur={(e) => handleBlur(e.target.name, e.target.value)}
                 />
               </div>
               {inpClass.mm === "error" || inpClass.yy === "error" ? (
@@ -84,14 +124,18 @@ export const Section = () => {
               <label htmlFor="">cvc</label>
               <input
                 className={inpClass.cvc}
-                type="text"
+                name="card_cvc"
+                type="number"
                 placeholder="e.g. 123"
                 maxLength={3}
+                minLength={3}
+                onBlur={(e) => handleBlur(e.target.name, e.target.value)}
               />
               {inpClass.cvc === "error" ? <span>Cant'be blank</span> : null}
             </div>
           </div>
-          <Button span={"Confirm"} />
+
+          <Button disable={handleDisabled} span={"Confirm"} />
         </div>
         <Result />
       </div>

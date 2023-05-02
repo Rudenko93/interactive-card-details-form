@@ -1,5 +1,17 @@
 import "./Button.scss"
 
-export const Button = ({ span }: Record<string, string>) => {
-  return <button className="button">{span}</button>
+interface IButtonProps {
+  disable?: () => boolean
+  span: string
+}
+
+export const Button: React.FC<IButtonProps> = ({
+  disable = () => false,
+  span,
+}) => {
+  return (
+    <button disabled={disable()} className="button">
+      {span}
+    </button>
+  )
 }
